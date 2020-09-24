@@ -1,0 +1,21 @@
+<?php include 'layout/header.phtml';?>
+
+<?php if(isset($_SESSION['userid'])):?>
+
+<form action="user/createPost" method="post">
+    <label for="post">Upiši svoj post</label>
+    <br>
+    <textarea id="post" name="post"></textarea>
+    <button type="submit" class="button-group">Post</button>
+
+</form>
+<?php endif;?>
+<?php //foreach(UserControler()->getAllPosts() as $post){
+//    echo $post;
+//}
+//    ;?>
+
+
+
+
+

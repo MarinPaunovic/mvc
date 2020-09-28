@@ -7,11 +7,12 @@ class View
 {
     public const view_path = BP . DIRECTORY_SEPARATOR . 'View';
 
-    public function render(string $template)
+    public function render(string $template, $args=[] ?? null)
     {
         $templateFileName = $this->getTemplateFileName($template);
-
-        return include $templateFileName;
+        extract($args,EXTR_SKIP);
+        include $templateFileName;
+        return $args;
     }
 
 

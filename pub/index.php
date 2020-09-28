@@ -8,6 +8,7 @@ spl_autoload_register(function ($class) {
         require_once $filename;
     }else header('Location: /');
 });
+ini_set('session.cookie_lifetime','864000');
 session_start();
 $router= new \App\Core\Router();
 $router->match();

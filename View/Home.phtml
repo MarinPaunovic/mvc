@@ -2,20 +2,18 @@
 
 <?php if(isset($_SESSION['userid'])):?>
 
-<form action="user/createPost" method="post">
-    <label for="post">Upiši svoj post</label>
-    <br>
-    <textarea id="post" name="post"></textarea>
-    <button type="submit" class="button-group">Post</button>
+<a class="nav-link" href="/post/createPost">Create new post.</a>
 
-</form>
 <?php endif;?>
-<?php //foreach(UserControler()->getAllPosts() as $post){
-//    echo $post;
-//}
-//    ;?>
+<?php foreach($titles as $title):?>
+<div>
+    <a href="/post/showPost"><?php echo $title['naslov'];?></a>
+    <br>
+    <?php if(isset($_SESSION['userid']) && $_SESSION['userid'] == $title['userid']):?>
+    <form action="/post/deletePost" method="post">
+        <input type="submit" value="Delete post">
+    </form>
+    <?php endif;?>
+</div>
 
-
-
-
-
+<?php endforeach;?>

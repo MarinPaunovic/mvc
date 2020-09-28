@@ -1,0 +1,17 @@
+<?php include "layout/header.phtml";?>
+<form action="/Post/createNewPost" method="post">
+    <div class="column">
+        <label for="pn">Naslov</label>
+        <br>
+        <input type="text" name="posttitle" id="pn">
+    </div>
+    <div>
+        <label for="pc">Sadržaj</label>
+        <br>
+        <textarea name="postcontent" class="large-text-center" id="pc"></textarea>
+    </div>
+    <button type="submit">Kreiraj</button>
+
+
+
+</form>

@@ -3,11 +3,9 @@ declare(strict_types=1);
 
 namespace App\Model;
 
-
 use App\Core\Database;
-use function Couchbase\defaultDecoder;
 
-class AbstarctModel extends Database
+class UserModel
 {
     public static function createUser($ime, $prezime, $email, $password)
     {
@@ -17,7 +15,7 @@ class AbstarctModel extends Database
         $result=mysqli_num_rows($query);
         if($result>=1)
         {
-         exit(header('Location: register'));
+            exit(header('Location: register'));
         }else {
             $passHash = md5($password);
             $sql = "INSERT INTO korisnici (Ime, Prezime, Email, Password) values('$ime','$prezime','$email','$passHash')";
@@ -39,25 +37,4 @@ class AbstarctModel extends Database
             return true;
         }else return false;
     }
-
-    public static function createPost($post){
-        Database::connect();
-        $userID=$_SESSION['userid'];
-        $sql="INSERT INTO posts (userid, post) VALUES ('$userID','$post')";
-        mysqli_query(Database::connect(),$sql);
-    }
-
-    public static function getAllPosts(){
-        Database::connect();
-        $sql="SELECT post  FROM posts";
-        $query=mysqli_query(Database::connect(),$sql);
-        $posts=[];
-        $i=0;
-        while($row=mysqli_fetch_array($query)){
-            $posts[$i++]=$row['post'];
-        }
-        return $posts;
-
-    }
-
 }

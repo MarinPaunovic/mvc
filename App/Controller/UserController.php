@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Core\Database;
-use App\Model\AbstarctModel;
+use App\Model\UserModel;
 
 class UserController extends AbstractController
 {
@@ -24,7 +24,7 @@ class UserController extends AbstractController
     {
         if ($this->validateDataRegister()) {
             if ($_POST['password'] === $_POST['confirm_password']) {
-                AbstarctModel::createUser($_POST['ime'], $_POST['prezime'], $_POST['email'], $_POST['password']);
+                UserModel::createUser($_POST['ime'], $_POST['prezime'], $_POST['email'], $_POST['password']);
                 header('Location: login');
             } else header('Location: register');
         }else header('Location: register');
@@ -34,7 +34,7 @@ class UserController extends AbstractController
     public function loginSubmitAction()
     {
         if ($this->validateDataLogin()) {
-            if(AbstarctModel::login($_POST['email'], $_POST['password'])){
+            if(UserModel::login($_POST['email'], $_POST['password'])){
                 header('Location: /');
             }else header('Location: login');
         } else header('Location: login');
@@ -46,17 +46,6 @@ class UserController extends AbstractController
         header('Location: /');
     }
 
-    public function createPostAction(){
-        if(isset($_POST['post']) && $_POST['post'] != null)
-        {
-            AbstarctModel::createPost($_POST['post']);
-        }
-        header('Location: /');
-    }
-
-    public function getAllPostsAction(){
-        AbstarctModel::getAllPosts();
-    }
 
 
 

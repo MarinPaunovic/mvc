@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 use App\Model\PostModel;
+use App\Model\UserModel;
 
 class HomeController extends AbstractController
 {

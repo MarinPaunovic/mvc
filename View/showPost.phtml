@@ -1,7 +1,18 @@
 <?php include "layout/header.phtml";?>
 
-
-<?php foreach($titles as $title):?>
-    <h1><?php echo $title['naslov']?></h1>
-    <h4><?php echo $title['post']?></h4>
-    <?php endforeach;?>
+<?php
+foreach($titles as $title)
+    foreach($userinfo as $user){
+    if($title['id']===$_GET['id']){
+        if($title['userid']==$user['id']){
+            echo $user['Ime'] . ' ' . $user['Prezime'];
+            echo "<br>";
+            echo $title['reg_date'];
+            echo "<br>";
+            echo $title['naslov'];
+            echo "<br>";
+            echo $title['post'];
+        }
+    }
+}
+?>

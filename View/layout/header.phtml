@@ -1,5 +1,4 @@
 <!doctype html>
-
 <html lang="en">
 <head>
     <!-- Required meta tags -->
@@ -8,7 +7,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <title>IPA Social Network</title>
-</head>
+<?php include_once "html.html";?>
 <body>
 <div class="container">
 
@@ -27,10 +26,17 @@
                     </li>
                 <?php endif;?>
                 <?php if(isset($_SESSION['userid'])):?>
-                <li class="nav-item">
-                    <a class="nav-link" href="/user/logout">Logout</a>
-                </li>
-                <?php endif;?>
             </ul>
         </div>
+  <div class="dropdown" >
+      <button class="dropbtn"><?php echo $_SESSION['Ime']?></button>
+        <div class="dropdown-content">
+        <a href=/post/PostMenagment>Post menagment</a>
+        <a href=/user/UserInfo>User information</a>
+        <a class="nav-link" href=/user/logout>Logout</a>
+        </div>
+  </div>
+        <?php endif;?>
     </nav>
+
+</body>

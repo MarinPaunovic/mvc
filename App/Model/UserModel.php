@@ -37,4 +37,32 @@ class UserModel
             return true;
         }else return false;
     }
+
+    public static function getUserInfo($id=null){
+        Database::connect();
+        if($id != null){
+            $sql="SELECT id,Ime,Prezime,Email FROM korisnici where id='$id'";
+        }else $sql="SELECT id,Ime,Prezime,Email FROM korisnici";
+        $query=mysqli_query(Database::connect(),$sql);
+        $users=[];
+        $i=0;
+        while($row=mysqli_fetch_assoc($query)){
+            $users[$i++]=$row;
+        }
+        return $users;
+        }
+public static function changeUserInfo($ime,$prezime,$email,$oldPass=null,$newPass=null,$id)
+{
+    Database::connect();
+    if($oldPass != null && $newPass !=null){
+    $hash_old_pass=md5($oldPass);
+    $hash_new_pass=md5($newPass);
+    $sql = "UPDATE korisnici SET Ime='$ime', Prezime='$prezime', Email='$email', Password='$hash_new_pass' WHERE id='$id' AND Password='$hash_old_pass' ";
+    mysqli_query(Database::connect(), $sql);
+    }else {
+    $sql="UPDATE korisnici SET Ime='$ime', Prezime='$prezime', Email='$email' WHERE id='$id'";
+    mysqli_query(Database::connect(), $sql);
+    }
+    header('Location: UserInfo');
+}
 }

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Core\Database;
 use App\Model\UserModel;
+use http\Client\Curl\User;
 
 class UserController extends AbstractController
 {
@@ -46,7 +47,19 @@ class UserController extends AbstractController
         header('Location: /');
     }
 
+    public function userInfoAction(){
+        $this->View->render('UserInfo', ['users'=>UserModel::getUserInfo()]);
+    }
 
+    public function changeUserInfoAction(){
+        if(isset($_POST['old_password']) && $_POST['old_password'] !== null){
+            if(isset($_POST['new_password']) && $_POST['new_password'] !== null && isset($_POST['confirm_new_password']) && $_POST['confirm_new_password']!== null && $_POST['new_password'] === $_POST['confirm_new_password']) {
+                UserModel::changeUserInfo($_POST['Ime'], $_POST['Prezime'], $_POST['Email'], $_POST['old_password'],$_POST['new_password'],$_POST['id']);
+            }
+        }else{
+        UserModel::changeUserInfo($_POST['Ime'],$_POST['Prezime'],$_POST['Email'],$_POST['id']);
+        }
+    }
 
 
     public function validateDataRegister()

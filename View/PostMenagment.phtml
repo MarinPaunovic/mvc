@@ -1,0 +1,15 @@
+<?php include "layout/header.phtml";?>
+
+<?php foreach($titles as $title):?>
+<?php if($title['userid']===$_SESSION['userid']):?>
+        <div class="border" id="abc">
+        <h4><a href=/post/showPost?id=<?php echo $title['id']?>><?php echo $title['naslov'];?></a></h4>
+            &nbsp;
+        <a href=/post/PostEdit?id=<?php echo $title['id']?> class="float-right">Edit</a>
+        &nbsp
+        <a href=/post/DeletePostEdit?id=<?php echo $title['id'];?> class="float-right" onclick="return confirm('Are you sure that you want to delete post?')">Delete</a>
+            &nbsp;
+</div>
+<br>
+<?php endif;?>
+<?php endforeach;?>

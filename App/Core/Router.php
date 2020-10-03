@@ -4,33 +4,42 @@ declare(strict_types=1);
 
 namespace App\Core;
 
+use App\Controller\PostController;
 use App\Core\exception\routeException;
+use mysql_xdevapi\Exception;
 
-class Router
+class Router extends \Exception
 {
     public function match()
     {
-        if ($_SERVER['REQUEST_URI'] == '/') {
+            $url = $_SERVER['REQUEST_URI'];
+            $parts = parse_url($url);
+        if(isset($parts['query'])) {
+            $urlgetm = explode('?', $parts['query']);
+        }
+            $url_class_name_trim = trim($parts['path'], '/');
+        if ($url_class_name_trim === '') {
             $controller = 'HomeController';
             $method = 'indexAction';
-        } else {
-            $actual_link = $_SERVER['REQUEST_URI'];
-            $actual_link = trim($actual_link, '/');
-            $parts = explode("/", $actual_link);
-            if (count($parts) > 2) {
-                header('Location: /');
+        }else {
+            $url_class_name_explode = explode('/', $url_class_name_trim);
+            $path_count=count($url_class_name_explode);
+            if($path_count>2){
+                throw new \Exception('Birali ste stranicu koja ne postoji');
             }
-            $controller = ucfirst(strtolower($parts[0] ?? 'home')) . 'Controller';
-            $method = strtolower($parts[1] ?? 'index') . 'Action';
-
+            if($path_count==2){
+                $controller = $url_class_name_explode[0] . 'Controller';
+                $method = $url_class_name_explode[1] . 'Action';
+            }else throw new \Exception('nema metode');
         }
         $className = "\\App\\Controller\\$controller";
-        if (!method_exists($className, $method)) {
-            header('Location: /');
-        } else {
-            $object = new $className();
-            return $object->$method();
 
-        }
+        if(file_exists(BP . $className. '.php')) {
+            if (method_exists($className, $method)) {
+                $object = new $className();
+                return $object->$method();
+            } else throw new \Exception('nepostojeće');
+        }else throw new \Exception('nije valjan kontroler');
     }
 }
+

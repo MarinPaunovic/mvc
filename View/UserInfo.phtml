@@ -1,0 +1,33 @@
+<?php include "layout/header.phtml";?>
+
+<?php foreach($users as $user):?>
+<?php if($user['id']==$_SESSION['userid']):?>
+<form action="/user/changeUserInfo" method="POST">
+    <input type="hidden" name="id" value=<?php echo $user['id']?>>
+        <label for="Ime">Ime</label>
+        <input type="text" id="Ime" name="Ime" value="<?php echo $user['Ime']?>">
+        <br>
+
+        <label for="Prezime">Prezime</label>
+        <input type="text" id="Prezime" name="Prezime" value="<?php echo $user['Prezime']?>">
+        <br>
+
+        <label for="Email">Email</label>
+        <input size="30" type="text" name="Email" id="Email" value="<?php echo $user['Email']?>">
+        <br>
+
+        <label for="Old_password">Old password</label>
+        <input size="30" type="password" name="old_password" id="Old_password">
+        <br>
+
+        <label for="new_password">New password</label>
+        <input size="30" type="password" name="new_password"  id="new_password">
+        <br>
+
+        <label for="new_password_confirm">Confirm password</label>
+        <input size="30" type="password" name="confirm_new_password" id="new_password_confirm">
+
+        <button class="float-right" type="submit">Submit</button>
+</form>
+<?php endif;?>
+<?php endforeach;?>

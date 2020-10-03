@@ -11,13 +11,17 @@ class PostModel
     public static function createPost($title,$content){
         Database::connect();
         $userID=$_SESSION['userid'];
-        $sql="INSERT INTO posts (userid, naslov, post) VALUES ('$userID','$title','$content')";
+        $title_escaped=mysqli_escape_string(Database::connect(),$title);
+        $content_escaped=mysqli_escape_string(Database::connect(),$content);
+        $sql="INSERT INTO posts (userid, naslov, post) VALUES ('$userID','$title_escaped','$content_escaped')";
         mysqli_query(Database::connect(),$sql);
     }
 
     public static function getAllPosts($orderBy=null){
         Database::connect();
-        $sql="SELECT naslov,id,userid FROM posts ORDER BY $orderBy";
+        if($orderBy !==null){
+            $sql="SELECT * FROM posts ORDER BY $orderBy";
+        }else {$sql="SELECT * FROM posts";}
         $query=mysqli_query(Database::connect(),$sql);
         $posts=[];
         $i=0;
@@ -29,13 +33,13 @@ class PostModel
 
     public static function deletePost($postId){
         Database::connect();
-        $sql="DELETE FROM posts WHERE userid='$postId'";
+        $sql="DELETE FROM posts WHERE id='$postId'";
         mysqli_query(Database::connect(),$sql);
     }
 
     public static function showOnePost(){
         Database::connect();
-        $sql="SELECT naslov,userid,post FROM posts WHERE id=24";
+        $sql="SELECT * FROM posts";
         $query=mysqli_query(Database::connect(),$sql);
         $posts=[];
         $i=0;
@@ -45,4 +49,9 @@ class PostModel
         return $posts;
     }
 
+    public static function PostUpdate($naslov,$content,$id){
+        Database::connect();
+        $sql="UPDATE posts SET naslov='$naslov', post='$content' where id='$id'";
+        mysqli_query(Database::connect(),$sql);
+    }
 }
